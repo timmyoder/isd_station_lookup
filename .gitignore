@@ -1,4 +1,5 @@
 resources/
+input_data/
 
 # pycharm stuff
 .idea/
