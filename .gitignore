@@ -1,5 +1,6 @@
 resources/
 input_data/
+output_data/
 
 # pycharm stuff
 .idea/

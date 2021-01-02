@@ -1,14 +1,11 @@
+import datetime as dt
 import pandas as pd
 import numpy as np
-import datetime as dt
-import time
 
-import peewee as pw
-from playhouse.sqlite_udf import sqrt
 from geopy import distance as geo_dist
 
 from models import StationHistory
-from config import INPUT_DIR
+from config import INPUT_DIR, OUTPUT_DIR
 
 
 def select_closest_stations(lat_target, lon_target, active_only=True):
@@ -19,6 +16,8 @@ def select_closest_stations(lat_target, lon_target, active_only=True):
      between station locations and target location.
 
      distances = (d_LAT)^2 + (d_LON)^2
+
+     returns a dataframe with station information for each of the close stations
 
      """
     query = StationHistory.select(
@@ -55,17 +54,14 @@ def select_closest_stations(lat_target, lon_target, active_only=True):
 
 
 def calc_distance_actual(locations, lat_target, lon_target):
-    """Actualates the actual distance (in miles) betwee the target lat/lon
+    """Calculates the actual distance (in miles) between the target lat/lon
     and the stations' location
-
-    Uses geopy.geo_dist.distance. Two or three times slower than
-    calc_distance_euclidean()
     """
 
     locations['distance_miles'] = locations.apply(
-        lambda x: geo_dist.distance((x['LAT'], x['LON']),
+        lambda x: np.round(geo_dist.distance((x['LAT'], x['LON']),
                                     (lat_target, lon_target),
-                                    ).miles,
+                                    ).miles, 3),
         axis=1)
 
     return locations
@@ -75,12 +71,7 @@ def find_closest(lat_target,
                  lon_target,
                  active_only=True,
                  return_tuple=False):
-    """finds the closest station as defined
-
-    Performance of distance_type method
-    actual: 0.019243001000000093 s
-    euclid: 0.008490397999999955 s
-    """
+    """finds the closest station to the target station"""
     close_stations = select_closest_stations(lat_target=lat_target,
                                              lon_target=lon_target,
                                              active_only=active_only)
@@ -101,7 +92,13 @@ def find_closest(lat_target,
             closest['distance_miles'].values[0])
 
 
-def find_closest_csv(file_name, active_only=True, distance_type='actual'):
+def find_closest_csv(file_name, active_only=True):
+    """finds the closest station for stations in an input csv.
+    The csv file must contain two columns named 'Latitude' and 'Longitude'
+
+    Columns with the stations USAF id, WBAN id, and the distance [in miles]
+    between the target location and station are added to the csv file.
+    """
     input_file = INPUT_DIR / file_name
     if not input_file.is_file():
         raise ValueError(f'{file_name} not found in {INPUT_DIR}')
@@ -121,11 +118,12 @@ def find_closest_csv(file_name, active_only=True, distance_type='actual'):
                         index=points.index)
 
     labeled_points = pd.concat([points, stns], axis=1)
-
+    output_file = OUTPUT_DIR / 'labeled_stations.csv'
+    labeled_points.to_csv(output_file, index=False)
     return labeled_points
 
 
 if __name__ == '__main__':
-    rand = find_closest_csv('rand.csv', distance_type='actual')
+    rand = find_closest_csv('rand.csv')
     # t = select_closest_stations(47.651910, -122.343435)
     # t = find_closest(47.651910, -122.343435)
