@@ -124,6 +124,10 @@ def find_closest_csv(file_name, active_only=True):
 
 
 if __name__ == '__main__':
-    rand = find_closest_csv('rand.csv')
-    # t = select_closest_stations(47.651910, -122.343435)
-    # t = find_closest(47.651910, -122.343435)
+    # sample usage: 
+    rand = find_closest_csv('rand.csv', active_only=True)
+
+    closest = find_closest(lat_target=47.651910,
+                           lon_target=-122.343435,
+                           active_only=True,
+                           )
