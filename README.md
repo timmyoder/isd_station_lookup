@@ -1,4 +1,4 @@
-# NOAA ISD Weather Station Look
+# NOAA ISD Weather Station Lookup
 Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station from an latitude/longitude input. A single point can be provided, or list of points in an input CSV file with 'Latitude', 'Longitude' columns.
 
 ## Project Structure
@@ -23,3 +23,9 @@ To download the current csv history file and create/populate the SQLite database
 ```
 python db_tools.py
 ```
+
+The `input_data/`, `output_data/`, and `resources/` directories are all automatically created at this point.
+
+## Get Station Information
+
+Place a csv file with target lat/lon points into the `input_data/` directory. **The csv file must contain columns named 'Latitude' and 'Longitude' with their respecitve points in decimal form (i.e. 47.651, -122.343).** Columns with the stations USAF id, WBAN id, and the distance [in miles] between the target location and station are added to the csv file and saved in the `output_data/` directory. You must have run the commands list in the Setup section for it to work.
