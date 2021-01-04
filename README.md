@@ -29,7 +29,7 @@ The `input_data/`, `output_data/`, and `resources/` directories are all automati
 
 ## Get Station Information
 
-The program can be run from the command line. You must have complete the steps in [Setup](#Setup). 
+The program can be run from the command line. You must have completed the steps in [Setup](#Setup). 
 
 usage
 
