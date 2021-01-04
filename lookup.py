@@ -87,6 +87,9 @@ def find_closest(lat_target,
     close_stations = close_stations[close_stations['USAF'] != '999999']
     close_stations = close_stations[close_stations['WBAN'] != '99999']
 
+    # remove stations that have a USAF that starts with 'A'. EX: 'A00023'
+    close_stations = close_stations[~close_stations['USAF'].str.startswith('A')]
+
     closest = close_stations.loc[close_stations.distance_miles ==
                                  close_stations['distance_miles'].min()]
     if not return_tuple:
@@ -159,7 +162,7 @@ def main():
                 logger.error('Weather station database required')
                 raise FileNotFoundError('Weather station database required')
 
-            
+
     active_only = not args.include_inactive
 
     if args.point is None and args.file is None:
@@ -192,4 +195,6 @@ if __name__ == '__main__':
     #                           'Longitude': np.random.default_rng().uniform(-70, -120, 50)})
     # rand.to_csv(INPUT_DIR / 'rand.csv')
 
-    main()
+    # main()
+    one = pd.read_csv(OUTPUT_DIR / 'labeled_stations1.csv')
+    no_a = pd.read_csv(OUTPUT_DIR / 'labeled_stations.csv')

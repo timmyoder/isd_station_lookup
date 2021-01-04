@@ -7,7 +7,12 @@ Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station to
 * `models.py` defines and creates a SQLite db to store all station information. db is stored at `resources/isd_history.db`
 * `config.py` creates the required directories and handles the file path management.
 * `lookup.py` finds the closest station to either a single lat/lon point or a list of stations defined in an input csv file.
-	* The closest 100 points to the target location are pulled from the database. The stations that are no longer active are filtered out, as well as stations with a USAF of '999999' or WBAN of '99999'.
+	* The closest 100 points to the target location are pulled from the database. 
+	* Stations that meet one or more of the following criteria are droped:
+		* 'END' date not within the last two weeks. 
+		* USAF of '999999' 
+		* USAF that starts with 'A'. EX: 'A00023'. 
+		* WBAN of '99999'.
 	* The actual distance [in miles] is calculated for each of those stations and then the station with the smallest distance is returned for the target station.
 
 ## Setup
