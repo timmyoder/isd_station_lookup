@@ -136,13 +136,13 @@ def find_closest_csv(file_name, active_only=True):
 
 
 def check_db_age():
-	two_wks_ago = dt.date.today() - dt.timedelta(weeks=2)
-	latest_date = StationHistory.select(
-		StationHistory.END
-	).order_by(StationHistory.END.desc()).limit(1).scalar()
+    two_wks_ago = dt.date.today() - dt.timedelta(weeks=2)
+    latest_date = StationHistory.select(
+        StationHistory.END
+    ).order_by(StationHistory.END.desc()).limit(1).scalar()
 
-	if latest_date < two_wks_ago:
-		while True:
+    if latest_date < two_wks_ago:
+        while True:
             choice = input('Station database is out of date. \n'
                            'Proceed with download updated history file? [y/n]')
             if choice in ['y', 'yes', 'Y', 'YES']:
@@ -155,15 +155,15 @@ def check_db_age():
 
 def check_db_exists():
     if not db_file.exists():
-    while True:
-        choice = input('Station database does not exist. \n'
-                       'Proceed with download history file? [y/n]')
-        if choice in ['y', 'yes', 'Y', 'YES']:
-            refresh_db()
-            break
-        elif choice in ['n', 'no', "N", 'NO']:
-            logger.error('Weather station database required')
-            raise FileNotFoundError('Weather station database required')
+        while True:
+            choice = input('Station database does not exist. \n'
+                           'Proceed with download history file? [y/n]')
+            if choice in ['y', 'yes', 'Y', 'YES']:
+                refresh_db()
+                break
+            elif choice in ['n', 'no', "N", 'NO']:
+                logger.error('Weather station database required')
+                raise FileNotFoundError('Weather station database required')
 
 
 def main():
