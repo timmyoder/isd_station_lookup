@@ -8,7 +8,7 @@ Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station to
 * `config.py` creates the required directories and handles the file path management.
 * `lookup.py` finds the closest station to either a single lat/lon point or a list of stations defined in an input csv file.
 	* The closest 100 points to the target location are pulled from the database. 
-	* Stations that meet one or more of the following criteria are droped:
+	* Stations that meet one or more of the following criteria are dropped:
 		* 'END' date not within the last two weeks. 
 		* USAF of '999999' 
 		* USAF that starts with 'A'. EX: 'A00023'. 
@@ -58,7 +58,7 @@ Which prints the following table to the console:
 
 ### Finding the closest stations to a list of points
 
-Place a csv file with target lat/lon points into the `input_data/` directory. **The csv file must contain columns named 'Latitude' and 'Longitude' with their respecitve points in decimal form (i.e. 47.651, -122.343).** Columns with the stations USAF id, WBAN id, and the distance [in miles] between the target location and station are added to the csv file and saved in the `output_data/` directory. 
+Place a csv file with target lat/lon points into the `input_data/` directory. **The csv file must contain columns named 'Latitude' and 'Longitude' with their respective points in decimal form (i.e. 47.651, -122.343).** Columns with the stations USAF id, WBAN id, and the distance [in miles] between the target location and station are added to the csv file and saved in the `output_data/` directory. 
 
 usage
 
