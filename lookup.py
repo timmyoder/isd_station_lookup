@@ -195,6 +195,4 @@ if __name__ == '__main__':
     #                           'Longitude': np.random.default_rng().uniform(-70, -120, 50)})
     # rand.to_csv(INPUT_DIR / 'rand.csv')
 
-    # main()
-    one = pd.read_csv(OUTPUT_DIR / 'labeled_stations1.csv')
-    no_a = pd.read_csv(OUTPUT_DIR / 'labeled_stations.csv')
+    main()
