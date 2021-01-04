@@ -7,12 +7,12 @@ Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station to
 * `models.py` defines and creates a SQLite db to store all station information. db is stored at `resources/isd_history.db`
 * `config.py` creates the required directories and handles the file path management.
 * `lookup.py` finds the closest station to either a single lat/lon point or a list of stations defined in an input csv file.
-	* The closest 100 points to the target location are pulled from the database. The stations that are no longer active are filtered out, as well as stations with a USAF of '999999'. 
-	* The actual distance [in miles] are calculated for each of those stations and then the station with the smallest distance is returned for the target station.
+	* The closest 100 points to the target location are pulled from the database. The stations that are no longer active are filtered out, as well as stations with a USAF of '999999' or WBAN of '99999'.
+	* The actual distance [in miles] is calculated for each of those stations and then the station with the smallest distance is returned for the target station.
 
 ## Setup
 
-If you have the conda package manager install, running the following command inside the repository directory to create a new conda env (named `stns_env`).
+If you have the conda package manager install, running the following commands inside the repository directory will create and activate a new conda env (named `stns_env`):
 
 ```
 conda env create -f environment.yml
@@ -29,18 +29,22 @@ The `input_data/`, `output_data/`, and `resources/` directories are all automati
 
 ## Get Station Information
 
-The program can be run from the commandline. You must have complete the steps in [Setup](#Setup)
-usage: `python lookup.py [-h] [--point POINT POINT] [--file FILE] [--include_inactive]`
+The program can be run from the command line. You must have complete the steps in [Setup](#Setup). 
+
+usage
+
+* `python lookup.py [-h] [--point POINT POINT] [--file FILE] [--include_inactive]`
 
 ### Finding the closest station to a point
 
-usage: `python lookup.py --point LATITUDE LONGITUDE`
+usage
 
-example:
+*  `python lookup.py --point LATITUDE LONGITUDE`
 
-```
-python lookup.py --point 47.651 -122.343
-```
+example
+
+* `python lookup.py --point 47.651 -122.343`
+
 Which prints the following table to the console:
 
 | USAF   | WBAN  | STATION_NAME               | LAT   | LON      | BEGIN      | END        | CTRY | STATE | ELEV | ICAO | distance_miles |
