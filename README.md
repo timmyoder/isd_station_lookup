@@ -12,7 +12,7 @@ Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station to
 
 ## Setup
 
-If you have the conda package manager install, running the following commands inside the repository directory will create and activate a new conda env (named `stns_env`):
+If you have the [conda package manager](https://docs.anaconda.com/anaconda/install/) installed, running the following commands inside the repository directory will create and activate a new conda env (named `stns_env`):
 
 ```
 conda env create -f environment.yml
