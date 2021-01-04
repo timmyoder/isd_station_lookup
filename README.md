@@ -32,6 +32,9 @@ python db_tools.py
 
 The `input_data/`, `output_data/`, and `resources/` directories are all automatically created at this point.
 
+### Database Browser
+The station data is stored in a SQLite database. It is much faster to query this than loading the entire CSV history file. I highly recommend [DB Browser for SQLite](https://sqlitebrowser.org/) to interact with it outside of python.
+
 ## Get Station Information
 
 The program can be run from the command line. You must have completed the steps in [Setup](#Setup). 
