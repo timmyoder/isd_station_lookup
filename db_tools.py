@@ -12,6 +12,8 @@ def download_history():
     """downloads the most recent station history file from the NOAA FTP site"""
     ftp_host = "ftp.ncdc.noaa.gov"
 
+    logger.info('Attempting to download history file from NOAA FTP')
+
     with ftplib.FTP(host=ftp_host) as ftpconn:
         ftpconn.login()
 
