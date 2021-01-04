@@ -1,5 +1,5 @@
 # NOAA ISD Weather Station Lookup
-Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station from an latitude/longitude input. A single point can be provided, or list of points in an input CSV file with 'Latitude', 'Longitude' columns.
+Look up the closest [NOAA ISD](https://www.ncdc.noaa.gov/isd) weather station to target latitude/longitude location(s). A single point can be provided, or list of points in an input CSV file with 'Latitude', 'Longitude' columns.
 
 ## Project Structure
 
@@ -16,6 +16,7 @@ If you have the conda package manager install, running the following command ins
 
 ```
 conda env create -f environment.yml
+conda activate stns_env
 ```
 
 To download the current csv history file and create/populate the SQLite database run: 
@@ -28,4 +29,35 @@ The `input_data/`, `output_data/`, and `resources/` directories are all automati
 
 ## Get Station Information
 
-Place a csv file with target lat/lon points into the `input_data/` directory. **The csv file must contain columns named 'Latitude' and 'Longitude' with their respecitve points in decimal form (i.e. 47.651, -122.343).** Columns with the stations USAF id, WBAN id, and the distance [in miles] between the target location and station are added to the csv file and saved in the `output_data/` directory. You must have run the commands list in the Setup section for it to work.
+The program can be run from the commandline. You must have complete the steps in [Setup](#Setup)
+usage: `python lookup.py [-h] [--point POINT POINT] [--file FILE] [--include_inactive]`
+
+### Finding the closest station to a point
+
+usage: `python lookup.py --point LATITUDE LONGITUDE`
+
+example:
+
+```
+python lookup.py --point 47.651 -122.343
+```
+Which prints the following table to the console:
+
+| USAF   | WBAN  | STATION_NAME               | LAT   | LON      | BEGIN      | END        | CTRY | STATE | ELEV | ICAO | distance_miles |
+|--------|-------|----------------------------|-------|----------|------------|------------|------|-------|------|------|----------------|
+| 727935 | 24234 | BOEING FLD/KING CO INTL AP | 47.53 | -122.301 | 1943-10-01 | 2020-12-29 | US   | WA    | 5.5  | KBFI | 8.587          |
+
+### Finding the closest stations to a list of points
+
+Place a csv file with target lat/lon points into the `input_data/` directory. **The csv file must contain columns named 'Latitude' and 'Longitude' with their respecitve points in decimal form (i.e. 47.651, -122.343).** Columns with the stations USAF id, WBAN id, and the distance [in miles] between the target location and station are added to the csv file and saved in the `output_data/` directory. 
+
+usage
+
+* `python lookup.py --file FILE_NAME`
+
+example
+
+* `python lookup.py --file my_input_file.csv`
+* Which saves a file `[output_data/labeled_points.csv]` with the closest stations
+
+
