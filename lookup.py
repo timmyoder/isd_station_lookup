@@ -132,16 +132,6 @@ def find_closest_csv(file_name, active_only=True):
 
 
 def main():
-    if not db_file.exists():
-        while True:
-            choice = input('Station database does not exist. \n'
-                           'Proceed with download history file? [y/n]')
-            if choice in ['y', 'yes', 'Y', 'YES']:
-                refresh_db()
-                break
-            elif choice in ['n', 'no', "N", 'NO']:
-                logger.error('Weather station database required')
-                raise FileNotFoundError('Weather station database required')
 
     # Create argument parser
     parser = argparse.ArgumentParser(
@@ -158,6 +148,18 @@ def main():
                         help='include inactive stations in results')
     args = parser.parse_args()
 
+    if not db_file.exists():
+        while True:
+            choice = input('Station database does not exist. \n'
+                           'Proceed with download history file? [y/n]')
+            if choice in ['y', 'yes', 'Y', 'YES']:
+                refresh_db()
+                break
+            elif choice in ['n', 'no', "N", 'NO']:
+                logger.error('Weather station database required')
+                raise FileNotFoundError('Weather station database required')
+
+            
     active_only = not args.include_inactive
 
     if args.point is None and args.file is None:
