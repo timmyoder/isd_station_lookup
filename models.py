@@ -39,6 +39,7 @@ def clear_db():
     if db_file.exists():
         os.remove(db_file)
         logger.info('existing database deleted')
+    db.close()
     db.connect()
     db.create_tables([StationHistory])
     logger.info('New db file create')
