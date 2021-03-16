@@ -51,7 +51,7 @@ def select_closest_stations(lat_target, lon_target, active_only=True):
                               'STATE', 'ELEV', 'ICAO', 'dist']
 
     if active_only:
-        two_wks_ago = dt.date.today() - dt.timedelta(weeks=2)
+        two_wks_ago = dt.date.today() - dt.timedelta(weeks=4)
         active_stns = close_stations[close_stations['END'] > two_wks_ago]
         return active_stns.reset_index(drop=True).drop(columns=['dist'])
     return close_stations.drop(columns=['dist'])
