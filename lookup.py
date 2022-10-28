@@ -95,9 +95,7 @@ def find_closest(lat_target,
                                  close_stations['distance_miles'].min()]
     if not return_tuple:
         return closest
-    return (closest['USAF'].values[0],
-            closest['WBAN'].values[0],
-            closest['distance_miles'].values[0])
+    return tuple(closest.iloc[0].to_list())
 
 
 def find_closest_csv(file_name, active_only=True):
@@ -125,7 +123,9 @@ def find_closest_csv(file_name, active_only=True):
                                active_only=active_only,
                                return_tuple=True),
         axis=1).tolist(),
-                        columns=['USAF', 'WBAN', 'distance_miles'],
+                        columns=['USAF', 'WBAN', 'STATION_NAME', 'LAT',
+                                 'LON', 'BEGIN', 'END', 'CTRY',
+                                 'STATE', 'ELEV', 'ICAO', 'dist'],
                         index=points.index)
 
     labeled_points = pd.concat([points, stns], axis=1)
@@ -167,7 +167,6 @@ def check_db_exists():
 
 
 def main():
-
     # Create argument parser
     parser = argparse.ArgumentParser(
         description='Find closest NOAA weather station to target location(s)')
