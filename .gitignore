@@ -1,6 +1,9 @@
 resources/
-input_data/
+input_data/*
 output_data/
+
+# don't ignore sample input file
+!input_data/sample_input_file.csv
 
 # pycharm stuff
 .idea/
